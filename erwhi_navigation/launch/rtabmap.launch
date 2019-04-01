@@ -86,6 +86,7 @@ THE SOFTWARE.
             <param name="Vis/MaxDepth" type="string" value="3.5"/>
             <param name="Grid/MaxGroundHeight" value="0.1"/>
             <param name="Grid/MaxObstacleHeight" value="0.2"/>
+            <param name="Grid/CellSize" value="0.025" />
             <!-->
             <param name="cloud_noise_filtering_radius" value="0.05" />
             <param name="cloud_noise_filtering_min_neighbors" value="2" />
