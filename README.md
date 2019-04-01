@@ -25,7 +25,7 @@ To run autonomous navigation: <br>
 
 
 ## Known issues
-* sometimes using **explore.launch** not give a new nav point to move_base, just send erwhi to e point and restart;
+* sometimes using **explore.launch** stucks to give a new nav point to move_base, just send erwhi to a point and restart explore.launch;
 * teb_local_planner configurations are not finals, at the moment Erwhi works on DWA.
 * frontier_exploration configurations need to be fixed.  I don't like frontier_exploration and I'm going to create a new exploration node.
 
