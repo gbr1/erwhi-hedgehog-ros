@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<robot name="imu" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="imu">
+        <xacro:property name="imu_size_x" value="0.004" />
+        <xacro:property name="imu_size_y" value="0.006" />
+        <xacro:property name="imu_size_z" value="0.001" />
+        <xacro:property name="imu_mass" value="0.00001" />
+        <xacro:property name="imu_offset_x" value="0.0095" />
+        <xacro:property name="imu_offset_y" value="-0.029" />
+        <xacro:property name="imu_offset_z" value="0.0021" />
+
+        <link name="imu_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="${imu_mass}" />
+                <inertia ixx="${imu_mass*(imu_size_y*imu_size_y+imu_size_z*imu_size_z)}" ixy="0" ixz="0"
+                         iyy="${imu_mass*(imu_size_x*imu_size_x+imu_size_z*imu_size_z)}" iyz="0"
+                         izz="${imu_mass*(imu_size_x*imu_size_x+imu_size_y*imu_size_y)}" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="${imu_size_x} ${imu_size_y} ${imu_size_z}" />
+                </geometry>
+                <material name="erwhi_black" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="${imu_size_x} ${imu_size_y} ${imu_size_z}" />
+                </geometry>
+            </collision>
+        </link>
+        <joint name="imu_joint" type="fixed">
+            <parent link="sengi_link" />
+            <child link="imu_link" />
+            <origin rpy="0 0 0" xyz="${imu_offset_x} ${imu_offset_y} ${imu_offset_z}"/>
+        </joint>
+        <gazebo reference="imu_link">
+            <turnGravityOff>false</turnGravityOff>
+            <material>Gazebo/FlatBlack</material>
+        </gazebo>
+    </xacro:macro> 
+
+    <gazebo reference="imu_link">
+        <gravity>true</gravity>
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>100</update_rate>
+            <visualize>true</visualize>
+            <topic>/imu/data</topic>
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+                <topicName>/imu/data</topicName>
+                <bodyName>imu_link</bodyName>
+                <updateRateHZ>100.0</updateRateHZ>
+                <gaussianNoise>0.0025</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>imu_link</frameName>
+            </plugin>
+            <pose>0 0 0 0 0 0</pose>
+        </sensor>
+    </gazebo>
+</robot>

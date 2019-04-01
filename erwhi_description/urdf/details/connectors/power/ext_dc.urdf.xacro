@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<robot name="ext_dc" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="ext_dc" params="offset_x offset_y offset_z">
+
+        <xacro:property name="ext_dc_length" value="0.010" />
+        <xacro:property name="ext_dc_radius" value="0.004" />
+        <xacro:property name="ext_dc_mass" value="0.007" />
+        
+        <link name="ext_dc_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="${ext_dc_mass}" />
+                <inertia ixx="${0.0834*ext_dc_mass*(3.0*ext_dc_radius*ext_dc_radius+ext_dc_length*ext_dc_length)}" ixy="0" ixz="0"
+                         iyy="${0.0834*ext_dc_mass*(3.0*ext_dc_radius*ext_dc_radius+ext_dc_length*ext_dc_length)}" iyz="0"
+                         izz="${0.5*ext_dc_mass*ext_dc_radius*ext_dc_radius}" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 ${-M_PI_2} 0" />
+                <geometry>
+                    <mesh filename="${path_meshes}/ext_dc.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="erwhi_aluminum" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 ${-M_PI_2} 0" />
+                <geometry>
+                    <cylinder length="${ext_dc_length}" radius="${ext_dc_radius}" />
+                </geometry>
+            </collision>
+        </link>
+        <joint name="ext_dc_joint" type="fixed">
+            <parent link="base_link" />
+            <child link="ext_dc_link" />
+            <origin rpy="0 0 0" xyz="${offset_x} ${offset_y} ${offset_z}"/>
+        </joint>
+        <gazebo reference="ext_dc_link">
+            <turnGravityOff>false</turnGravityOff>
+            <material>Gazebo/Grey</material>
+        </gazebo>
+    </xacro:macro> 
+</robot>

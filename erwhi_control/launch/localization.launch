@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<launch>
+	<node name="ukf_odom" pkg="robot_localization" type="ukf_localization_node"  output="screen" >
+		<param name="frequency" value="50" />
+
+		<param name="transform_time_offset" value="0.0"/>
+
+		<param name="two_d_mode" value="true" />
+		
+		<param name="map_frame" value="map" />
+		<param name="odom_frame" value="odom" />
+		<param name="base_link_frame" value="base_footprint" />
+		<param name="world_frame" value="odom" />
+
+		
+		<param name="odom0" value="/erwhi_velocity_controller/odom" />
+       	<param name="odom1" value="/visual_odometry" />
+		<param name="imu0" value="/imu/data" />
+		
+		<!--                             x     y     z      r      p      y      x'     y'    z'     r'     p'    y'     x''    y''    z''  -->
+		<rosparam param="odom0_config">[true, true, false, false, false, true, true, false, false, false, false, true, false, false, false]</rosparam>
+        <rosparam param="odom1_config">[true, true, true, false, false, false, true, true, true, false, false, false, false, false, false]</rosparam> 
+		<rosparam param="imu0_config"> [false, false, false, false, false, true, false, false, false, false, false, true, true, false, false]</rosparam>
+
+        
+		<param name="odom0_differential"  value="false" />
+        <param name="odom1_differential"  value="true" />
+		<param name="imu0_differential"   value="true" />
+
+		<param name="odom0_relative"      value="false" />
+        <param name="odom1_relative"      value="false" />
+		<param name="imu0_relative"  	  value="false" />
+
+		<param name="odom0_pose_rejection_threshold" value="5.0" />
+		<param name="odom0_twist_rejection_threshold" value="5.0" />
+   
+        <param name="odom1_pose_rejection_threshold" value="5.0" />
+		<param name="odom1_twist_rejection_threshold" value="5.0" />
+
+		<param name="imu0_remove_gravitational_acceleration"   value="true" />
+
+		
+	</node>
+</launch>

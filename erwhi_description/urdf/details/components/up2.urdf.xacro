@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<robot name="up2" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="up2" params="offset_x offset_y offset_z">
+
+        <xacro:property name="up2_size_x" value="0.09" />
+        <xacro:property name="up2_size_y" value="0.086" />
+        <xacro:property name="up2_size_z" value="0.045" />
+        <xacro:property name="up2_mass" value="0.05" />
+
+        <link name="up2_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="${up2_mass}" />
+                <inertia ixx="${up2_mass*(up2_size_y*up2_size_y+up2_size_z*up2_size_z)}" ixy="0" ixz="0"
+                         iyy="${up2_mass*(up2_size_x*up2_size_x+up2_size_z*up2_size_z)}" iyz="0"
+                         izz="${up2_mass*(up2_size_x*up2_size_x+up2_size_y*up2_size_y)}" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 ${M_PI} ${-M_PI_2}" />
+                <geometry>
+                    <mesh filename="${path_meshes}/up2.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="erwhi_aluminum" />
+            </visual>
+            <collision>
+                <origin xyz="-0.017 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="${up2_size_x} ${up2_size_y} ${up2_size_z}" />
+                </geometry>
+            </collision>
+        </link>
+        <joint name="up2_joint" type="fixed">
+            <parent link="base_link" />
+            <child link="up2_link" />
+            <origin rpy="0 0 0" xyz="${offset_x} ${offset_y} ${offset_z}"/>
+        </joint>
+        <gazebo reference="up2_link">
+            <turnGravityOff>false</turnGravityOff>
+            <material>Gazebo/Grey</material>
+        </gazebo>
+    </xacro:macro> 
+</robot>

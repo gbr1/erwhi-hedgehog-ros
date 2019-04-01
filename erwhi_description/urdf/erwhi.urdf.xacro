@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<robot name="erwhi_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+    
+    <xacro:include filename="$(find erwhi_description)/urdf/materials.xacro" />
+
+    <xacro:include filename="$(find erwhi_description)/urdf/parts/wheel.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/parts/chassis.urdf.xacro" />
+
+    <xacro:include filename="$(find erwhi_description)/urdf/sensors.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/casters.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/details.urdf.xacro" />
+
+    <xacro:property name="path_meshes" value="package://erwhi_description/meshes" />
+
+
+    <xacro:property name="M_PI" value="3.1415926535897931" />
+    <xacro:property name="M_PI_2" value="1.570796327" />
+
+
+    <!-- wheel -->
+    <xacro:property name="wheel_tread" value="0.01" />
+    <xacro:property name="wheel_radius" value="0.035" />
+    <xacro:property name="wheel_mass" value="0.100" />
+    <xacro:property name="wheel_offset_x" value="0.0" />
+    <xacro:property name="wheel_offset_y" value="0.057" />
+    <xacro:property name="wheel_offset_z" value="0.006" />
+
+
+    <xacro:macro name="erwhi_robot">
+
+        <link name="base_footprint">
+          <!-->  <inertial>
+                <mass value="0.0001" />
+                <origin xyz="0 0 0" />
+                <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001" />
+            </inertial>-->
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.001 0.001 0.001" />
+                </geometry>
+                <material name="erwhi_footprint" />
+            </visual>
+        </link>
+
+        <gazebo reference="base_footprint">
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+
+        <joint name="base_footprint_joint" type="fixed">
+            <origin xyz="0 0 ${wheel_radius - wheel_offset_z}" rpy="0 0 0" />
+            <parent link="base_footprint"/>
+            <child link="base_link" />
+        </joint>
+
+        <!-- BASE-LINK -->
+        <!-- robot body -->
+        <xacro:chassis type="base_link">
+        </xacro:chassis>
+        
+        <!-- wheels -->
+        <xacro:wheel lr="left" parent="base_link" offset_x="${wheel_offset_x}" offset_y="${wheel_offset_y}" offset_z="${wheel_offset_z}" flip="0">
+        </xacro:wheel>
+        <xacro:wheel lr="right" parent="base_link" offset_x="${wheel_offset_x}" offset_y="${-wheel_offset_y}" offset_z="${wheel_offset_z}" flip="1">
+        </xacro:wheel>
+        
+        
+        <!-- casters -->
+        <xacro:casters />
+        <!-- details -->
+        <xacro:details />
+        <!-- sensors -->
+        <xacro:sensors />
+        
+
+        
+    </xacro:macro>
+
+    <!-- Differential drive controller -->
+    <gazebo>
+        <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+            <legacyMode>true</legacyMode>
+            <rosDebugLevel>Debug</rosDebugLevel>
+            <publishWheelTF>false</publishWheelTF>
+            <robotNamespace>/</robotNamespace>
+            <publishTf>1</publishTf>
+            <publishWheelJointState>false</publishWheelJointState>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>100.0</updateRate>
+            <!-- strange gazebo annotation -->
+            <leftJoint>right_joint</leftJoint>
+            <rightJoint>left_joint</rightJoint>
+            <wheelSeparation>${2*wheel_offset_y}</wheelSeparation>
+            <wheelDiameter>${2*wheel_radius}</wheelDiameter>
+            <broadcastTF>1</broadcastTF>
+            <wheelTorque>1</wheelTorque>
+            <wheelAcceleration>1.8</wheelAcceleration>
+            <commandTopic>/erwhi_velocity_controller/cmd_vel</commandTopic>
+            <publishOdomTF>false</publishOdomTF>
+            <odometryFrame>odom</odometryFrame> 
+            <odometryTopic>/erwhi_velocity_controller/odom</odometryTopic> 
+            <odometrySource>world</odometrySource> 
+            <robotBaseFrame>base_footprint</robotBaseFrame>
+        </plugin>
+    </gazebo>
+    
+</robot>

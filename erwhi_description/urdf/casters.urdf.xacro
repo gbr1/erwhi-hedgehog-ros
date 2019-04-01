@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<robot name="casters" xmlns:xacro="http://ros.org/wiki/xacro">
+    
+    <xacro:include filename="$(find erwhi_description)/urdf/casters/omniwheel.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/casters/ball_caster_fixed.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/casters/ball_caster.urdf.xacro" />
+
+    <!-- omniwheel -->
+    <xacro:property name="omniwheel_offset_x" value="-0.036" />
+    <xacro:property name="omniwheel_offset_y" value="0.0" />
+    <xacro:property name="omniwheel_offset_z" value="-0.006" />
+
+    <!-- ball caster -->
+    <xacro:property name="ball_caster_fixed_offset_x" value="0.039" />
+    <xacro:property name="ball_caster_fixed_offset_y" value="0.0" />
+    <xacro:property name="ball_caster_fixed_offset_z" value="-0.0063" />
+
+    <xacro:property name="ball_caster_offset_x" value="0.0" />
+    <xacro:property name="ball_caster_offset_y" value="0.0" />
+    <xacro:property name="ball_caster_offset_z" value="-0.012" />
+
+    <xacro:macro name="casters">
+        
+        <!-- casters -->
+        <xacro:omniwheel offset_x="${omniwheel_offset_x}" offset_y="${omniwheel_offset_y}" offset_z="${omniwheel_offset_z}">
+        </xacro:omniwheel>
+        <xacro:ball_caster_fixed offset_x="${ball_caster_fixed_offset_x}" offset_y="${ball_caster_fixed_offset_y}" offset_z="${ball_caster_fixed_offset_z}">
+        </xacro:ball_caster_fixed>
+        <xacro:ball_caster offset_x="${ball_caster_offset_x}" offset_y="${ball_caster_offset_y}" offset_z="${ball_caster_offset_z}">
+        </xacro:ball_caster>
+        
+    </xacro:macro> 
+</robot>

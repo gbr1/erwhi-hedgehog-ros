@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<robot name="omniwheel" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="omniwheel" params="offset_x offset_y offset_z">
+        
+        <xacro:property name="omniwheel_tread" value="0.028" />
+        <xacro:property name="omniwheel_radius" value="0.024" />
+        <xacro:property name="omniwheel_mass" value="0.050" />
+
+        <link name="omniwheel_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="${omniwheel_mass}" />
+                <inertia ixx="${0.0834*omniwheel_mass*(3.0*omniwheel_radius*omniwheel_radius+omniwheel_tread*omniwheel_tread)}" ixy="0" ixz="0"
+                         iyy="${0.0834*omniwheel_mass*(3.0*omniwheel_radius*omniwheel_radius+omniwheel_tread*omniwheel_tread)}" iyz="0"
+                         izz="${0.5*omniwheel_mass*omniwheel_radius*omniwheel_radius}" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="${path_meshes}/omniwheel.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="erwhi_light_grey" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="${M_PI_2} 0 0" />
+                <geometry>
+                    <cylinder length="${omniwheel_tread}" radius="${omniwheel_radius}" />
+                </geometry>
+            </collision>
+        </link>
+        <joint name="omniwheel_joint" type="fixed">
+            <parent link="base_link" />
+            <child link="omniwheel_link" />
+            <origin rpy="0.0 0.0 0" xyz="${offset_x} ${offset_y} ${offset_z}"/>
+        </joint>
+        <gazebo reference="omniwheel_link">
+            <turnGravityOff>false</turnGravityOff>
+            <material>Gazebo/DarkGrey</material>
+        </gazebo>
+    </xacro:macro> 
+</robot>

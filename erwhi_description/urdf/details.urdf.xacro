@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<robot name="details" xmlns:xacro="http://ros.org/wiki/xacro">
+    
+    <xacro:include filename="$(find erwhi_description)/urdf/details/components/battery_holder.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/details/components/battery.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/details/components/antenna.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/details/components/motor.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/details/components/encoder.urdf.xacro" />
+
+    <xacro:include filename="$(find erwhi_description)/urdf/details/connectors/power/power_switch.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/details/connectors/power/ext_dc.urdf.xacro" />
+
+    <xacro:include filename="$(find erwhi_description)/urdf/details/connectors/wago/wago2.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/details/connectors/wago/wago3.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/details/components/up2.urdf.xacro" />
+    <xacro:include filename="$(find erwhi_description)/urdf/details/connectors/standoffs/standoff.urdf.xacro" />
+
+    <!-- battery holder -->
+    <xacro:property name="bh_offset_x" value="-0.01325" />
+    <xacro:property name="bh_offset_y" value="0.032" />
+    <xacro:property name="bh_offset_z" value="-0.002" />
+    
+    <!-- battery -->
+    <xacro:property name="battery_offset_x" value="0" />
+    <xacro:property name="battery_offset_y" value="0" />
+    <xacro:property name="battery_offset_z" value="-0.012" />
+
+    <!-- antenna -->
+    <xacro:property name="antenna_offset_x" value="-0.053" />
+    <xacro:property name="antenna_offset_y" value="0.053" />
+    <xacro:property name="antenna_offset_z" value="0.010" />
+
+    <!-- motor -->
+    <xacro:property name="motor_offset_x" value="0" />
+    <xacro:property name="motor_offset_y" value="0.040" />
+    <xacro:property name="motor_offset_z" value="0.006" />
+    
+    <!-- encoder -->
+    <xacro:property name="encoder_offset_x" value="0" />
+    <xacro:property name="encoder_offset_y" value="0.011" />
+    <xacro:property name="encoder_offset_z" value="-0.01" />
+
+    <!-- power switch -->
+    <xacro:property name="ps_offset_x" value="-0.06" />
+    <xacro:property name="ps_offset_y" value="-0.025" />
+    <xacro:property name="ps_offset_z" value="0.012" />
+
+    <!-- ext dc -->
+    <xacro:property name="ext_dc_offset_x" value="-0.06" />
+    <xacro:property name="ext_dc_offset_y" value="0.023" />
+    <xacro:property name="ext_dc_offset_z" value="0.008" />
+
+    <!-- wago2 -->
+    <xacro:property name="wago2_0_offset_x" value="-0.031" />
+    <xacro:property name="wago2_0_offset_y" value="0.037" />
+    <xacro:property name="wago2_0_offset_z" value="0" />
+    <xacro:property name="wago2_1_offset_x" value="-0.0225" />
+    <xacro:property name="wago2_1_offset_y" value="-0.0235" />
+    <xacro:property name="wago2_1_offset_z" value="0" />
+    <xacro:property name="wago2_2_offset_x" value="-0.031" />
+    <xacro:property name="wago2_2_offset_y" value="-0.037" />
+    <xacro:property name="wago2_2_offset_z" value="0" />
+    <xacro:property name="wago2_3_offset_x" value="-0.007" />
+    <xacro:property name="wago2_3_offset_y" value="0" />
+    <xacro:property name="wago2_3_offset_z" value="0" />
+
+    <!-- wago3 -->
+    <xacro:property name="wago3_0_offset_x" value="-0.021" />
+    <xacro:property name="wago3_0_offset_y" value="0.035" />
+    <xacro:property name="wago3_0_offset_z" value="0" />
+
+     <!-- up2 -->
+    <xacro:property name="up2_offset_x" value="0.0045" />
+    <xacro:property name="up2_offset_y" value="0.001" />
+    <xacro:property name="up2_offset_z" value="0.0506" />
+
+    <!-- standoffs -->
+    <xacro:property name="standoff_0_offset_x" value="-0.0585" />
+    <xacro:property name="standoff_0_offset_y" value="0.037" />
+    <xacro:property name="standoff_0_offset_z" value="-0.0016" />
+    <xacro:property name="standoff_1_offset_x" value="0.0245" />
+    <xacro:property name="standoff_1_offset_y" value="0.019" />
+    <xacro:property name="standoff_1_offset_z" value="-0.0016" />
+    <xacro:property name="standoff_2_offset_x" value="0.0245" />
+    <xacro:property name="standoff_2_offset_y" value="-0.039" />
+    <xacro:property name="standoff_2_offset_z" value="-0.0016" />
+    <xacro:property name="standoff_3_offset_x" value="-0.0245" />
+    <xacro:property name="standoff_3_offset_y" value="0.019" />
+    <xacro:property name="standoff_3_offset_z" value="-0.0016" />
+    <xacro:property name="standoff_4_offset_x" value="-0.0245" />
+    <xacro:property name="standoff_4_offset_y" value="-0.039" />
+    <xacro:property name="standoff_4_offset_z" value="-0.0016" />
+
+    <xacro:macro name="details">
+        <!-- batteries -->
+        <xacro:battery_holder l_r="left" offset_x="${bh_offset_x}" offset_y="${bh_offset_y}" offset_z="${bh_offset_z}" flip="1">
+        </xacro:battery_holder>
+        <xacro:battery_holder l_r="right" offset_x="${bh_offset_x}" offset_y="${-bh_offset_y}" offset_z="${bh_offset_z}" flip="0">
+        </xacro:battery_holder>
+        <xacro:battery l_r="left" offset_x="${battery_offset_x}" offset_y="${battery_offset_y}" offset_z="${battery_offset_z}" flip="1">
+        </xacro:battery>
+        <xacro:battery l_r="right" offset_x="${battery_offset_x}" offset_y="${battery_offset_y}" offset_z="${battery_offset_z}" flip="0">
+        </xacro:battery>
+        
+        <!-- antennas -->
+        <xacro:antenna l_r="left" offset_x="${antenna_offset_x}" offset_y="${antenna_offset_y}" offset_z="${antenna_offset_z}">
+        </xacro:antenna>
+         <xacro:antenna l_r="right" offset_x="${antenna_offset_x}" offset_y="${-antenna_offset_y}" offset_z="${antenna_offset_z}">
+        </xacro:antenna>
+        
+        <!-- motors -->
+        <xacro:motor l_r="left" offset_x="${motor_offset_x}" offset_y="${motor_offset_y}" offset_z="${motor_offset_z}" flip="0">
+        </xacro:motor>
+        <xacro:motor l_r="right" offset_x="${motor_offset_x}" offset_y="${-motor_offset_y}" offset_z="${motor_offset_z}" flip="1">
+        </xacro:motor>
+        <xacro:encoder l_r="left" offset_x="${encoder_offset_x}" offset_y="${encoder_offset_y}" offset_z="${encoder_offset_z}" flip="0">
+        </xacro:encoder>
+        <xacro:encoder l_r="right" offset_x="${encoder_offset_x}" offset_y="${-encoder_offset_y}" offset_z="${encoder_offset_z}" flip="1">
+        </xacro:encoder>
+        
+        <!-- power -->
+        <xacro:power_switch offset_x="${ps_offset_x}" offset_y="${ps_offset_y}" offset_z="${ps_offset_z}">
+        </xacro:power_switch>
+        <xacro:ext_dc offset_x="${ext_dc_offset_x}" offset_y="${ext_dc_offset_y}" offset_z="${ext_dc_offset_z}">
+        </xacro:ext_dc>
+
+        <!-- wagos -->
+        <xacro:wago2 code="0" offset_x="${wago2_0_offset_x}" offset_y="${wago2_0_offset_y}" offset_z="${wago2_0_offset_z}" flip="0">
+        </xacro:wago2>
+        <xacro:wago2 code="1" offset_x="${wago2_1_offset_x}" offset_y="${wago2_1_offset_y}" offset_z="${wago2_1_offset_z}" flip="0">
+        </xacro:wago2>
+        <xacro:wago2 code="2" offset_x="${wago2_2_offset_x}" offset_y="${wago2_2_offset_y}" offset_z="${wago2_2_offset_z}" flip="0">
+        </xacro:wago2>
+        <xacro:wago2 code="3" offset_x="${wago2_3_offset_x}" offset_y="${wago2_3_offset_y}" offset_z="${wago2_3_offset_z}" flip="1">
+        </xacro:wago2>
+        <xacro:wago3 code="0" offset_x="${wago3_0_offset_x}" offset_y="${wago3_0_offset_y}" offset_z="${wago3_0_offset_z}" flip="0">
+        </xacro:wago3>
+
+        <!-- up2 -->
+        <xacro:up2  offset_x="${up2_offset_x}" offset_y="${up2_offset_y}" offset_z="${up2_offset_z}">
+        </xacro:up2>
+        <xacro:standoff code="0" offset_x="${standoff_0_offset_x}" offset_y="${standoff_0_offset_y}" offset_z="${standoff_0_offset_z}">
+        </xacro:standoff>
+        <xacro:standoff code="1" offset_x="${standoff_1_offset_x}" offset_y="${standoff_1_offset_y}" offset_z="${standoff_1_offset_z}">
+        </xacro:standoff>
+        <xacro:standoff code="2" offset_x="${standoff_2_offset_x}" offset_y="${standoff_2_offset_y}" offset_z="${standoff_2_offset_z}">
+        </xacro:standoff>
+        <xacro:standoff code="3" offset_x="${standoff_3_offset_x}" offset_y="${standoff_3_offset_y}" offset_z="${standoff_3_offset_z}">
+        </xacro:standoff>
+        <xacro:standoff code="4" offset_x="${standoff_4_offset_x}" offset_y="${standoff_4_offset_y}" offset_z="${standoff_4_offset_z}">
+        </xacro:standoff>
+    </xacro:macro> 
+</robot>

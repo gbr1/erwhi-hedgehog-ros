@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+
+<launch>
+    <!-- check if you are simulating robot with gazebo -->
+    <arg  name="gazebo" default="false" />
+    <group unless="$(arg gazebo)">
+
+        <!-- robot description -->
+        <include file="$(find erwhi_description)/launch/description.launch" />
+
+        <!-- set up robot sensors -->
+        <include file="$(find erwhi_bringup)/launch/include/sensors.launch" />
+
+        <!-- load sengi driver -->
+        <include file="$(find sengi_ros)/launch/sengi_node.launch" />
+
+        <!-- run control -->
+        <include file="$(find erwhi_control)/launch/control.launch" />
+
+    </group>
+
+    <!-- filtering wheel odometry, imu and visual odometery -->
+    <include file="$(find erwhi_control)/launch/localization.launch" />
+
+    <!-- enable more cmd_vel publishers (e.g. joy and move_base) -->
+    <include file="$(find erwhi_control)/launch/twist_mux.launch" />
+
+    <!-- run slam -->
+    <include file="$(find erwhi_navigation)/launch/rtabmap.launch" />
+
+    <!-- run navigation -->
+    <include file="$(find erwhi_navigation)/launch/move_base.launch" />
+</launch>

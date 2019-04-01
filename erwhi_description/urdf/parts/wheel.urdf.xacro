@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<robot name="wheel" xmlns:xacro="http://ros.org/wiki/xacro">
+     <xacro:macro name="wheel" params="lr parent offset_x offset_y offset_z flip">
+        <link name="${lr}_wheel">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="${wheel_mass}" />
+                <inertia ixx="${0.0834*wheel_mass*(3.0*wheel_radius*wheel_radius+wheel_tread*wheel_tread)}" ixy="0" ixz="0"
+                         iyy="${0.0834*wheel_mass*(3.0*wheel_radius*wheel_radius+wheel_tread*wheel_tread)}" iyz="0"
+                         izz="${0.5*wheel_mass*wheel_radius*wheel_radius}" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 ${-flip*M_PI+M_PI_2}" />
+                <geometry>
+                    <mesh filename="${path_meshes}/pololu-wheel-70.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="erwhi_black" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="${M_PI_2} 0 0" />
+                <geometry>
+                    <cylinder length="${wheel_tread}" radius="${wheel_radius}" />
+                </geometry>
+            </collision>
+        </link>
+
+        <gazebo reference="${lr}_wheel">
+            <mu1 value="1.0"/>
+            <mu2 value="1.0"/>
+            <kp  value="10000000.0" />
+            <kd  value="1.0" />
+            <fdir1 value="1 0 0"/>
+            <turnGravityOff>false</turnGravityOff>
+            <material>Gazebo/FlatBlack</material>
+        </gazebo>
+
+        <joint name="${lr}_joint" type="continuous">
+            <parent link="${parent}" />
+            <child link="${lr}_wheel" />
+            <axis xyz="0 1 0" rpy="0  0" />
+            <origin rpy="0.0 0.0 0.0" xyz="${offset_x} ${offset_y} ${offset_z}"/>
+            <limit effort="100" velocity="100"/>
+            <joint_properties damping="0.0" friction="0.0"/>
+        </joint>
+
+        <transmission name="${lr}_trans" type="SimpleTransmission">
+		    <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${lr}_joint">
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            </joint>
+		    <actuator name="${lr}_motor">
+			    <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>VelocityJointInterface</hardwareInterface>
+		    </actuator>
+        </transmission>
+     </xacro:macro>
+</robot>

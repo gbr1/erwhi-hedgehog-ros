@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<robot name="battery" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="battery" params="l_r offset_x offset_y offset_z flip">
+    
+        <xacro:property name="battery_length" value="0.065" />
+        <xacro:property name="battery_radius" value="0.009" />
+        <xacro:property name="battery_mass" value="0.150" />
+
+        <link name="${l_r}_battery_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="${battery_mass}" />
+                <inertia ixx="${0.0834*battery_mass*(3.0*battery_radius*battery_radius+battery_length*battery_length)}" ixy="0" ixz="0"
+                         iyy="${0.0834*battery_mass*(3.0*battery_radius*battery_radius+battery_length*battery_length)}" iyz="0"
+                         izz="${0.5*battery_mass*battery_radius*battery_radius}" />
+            </inertial>
+            <visual>
+                <origin xyz="${-0.012*flip+0.006} 0 0" rpy="0 0 ${M_PI/2-1*flip*M_PI}" />
+                <geometry>
+                    <mesh filename="${path_meshes}/battery.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="erwhi_purple" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 ${M_PI_2} 0" />
+                <geometry>
+                    <cylinder length="${battery_length}" radius="${battery_radius}" />
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${l_r}_battery_joint" type="fixed">
+            <parent link="${l_r}_battery_holder_link" />
+            <child link="${l_r}_battery_link" />
+            <origin rpy="0 0 0" xyz="${offset_x} ${offset_y} ${offset_z}"/>
+        </joint>
+        <gazebo reference="${l_r}_battery_link">
+            <turnGravityOff>false</turnGravityOff>
+            <material>Gazebo/Purple</material>
+        </gazebo>
+    </xacro:macro> 
+</robot>

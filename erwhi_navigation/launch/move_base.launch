@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<launch>
+
+    <arg name="odom_frame_id"   default="odom"/>
+    <arg name="base_frame_id"   default="base_footprint"/>
+    <arg name="global_frame_id" default="map"/>
+    <arg name="odom_topic" default="odometry/filtered" />
+
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <rosparam file="$(find erwhi_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find erwhi_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />   
+        <rosparam file="$(find erwhi_navigation)/config/local_costmap_params.yaml" command="load" />   
+        <rosparam file="$(find erwhi_navigation)/config/global_costmap_params.yaml" command="load" />       
+        <rosparam file="$(find erwhi_navigation)/config/move_base_params.yaml" command="load" />
+
+        <!-- DWA planner -->
+        <!-- -->
+        <rosparam file="$(find erwhi_navigation)/config/dwa_local_planner_params.yaml" command="load" />
+        <rosparam file="$(find erwhi_navigation)/config/global_planner_params.yaml" command="load" />
+        <rosparam file="$(find erwhi_navigation)/config/navfn_global_planner_params.yaml" command="load" />
+        <param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame_id)"/>-->
+        <!-- -->
+
+        <!-- TEB planner -->
+        <!-- >
+        <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+        <rosparam file="$(find erwhi_navigation)/config/teb_planner.yaml" />
+        -->
+        
+        <!-- reset frame_id parameters using user input data -->
+        <param name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
+        <param name="global_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
+        <param name="local_costmap/global_frame" value="$(arg odom_frame_id)"/>
+        <param name="local_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
+        
+
+        <remap from="cmd_vel" to="move_base/cmd_vel"/>
+        <remap from="map" to="rtabmap/grid_map" />
+    </node>
+</launch>
