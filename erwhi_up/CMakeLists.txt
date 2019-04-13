@@ -24,7 +24,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(erwhi_up)
 
-find_package(catkin REQUIRED COMPONENTS sengi_ros erwhi_description realsense2_camera erwhi_control upboard_ros joint_state_publisher rtabmap rtabmap_ros)
+find_package(catkin REQUIRED COMPONENTS sengi_ros erwhi_description realsense2_camera erwhi_control upboard_ros joint_state_publisher)
 
 catkin_package(
 #  INCLUDE_DIRS include

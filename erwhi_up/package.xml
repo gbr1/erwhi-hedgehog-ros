@@ -58,13 +58,6 @@ THE SOFTWARE.
   <exec_depend>erwhi_control</exec_depend>
   <exec_depend>upboard_ros</exec_depend>
   <exec_depend>joint_state_publisher</exec_depend>
-  <build_depend>rtabmap</build_depend>
-
-  <build_export_depend>rtabmap</build_export_depend>
-
   <exec_depend>rtabmap</exec_depend>
-
-  <build_depend>rtabmap_ros</build_depend>
-  <build_export_depend>rtabmap_ros</build_export_depend>
   <exec_depend>rtabmap_ros</exec_depend>
 </package>
