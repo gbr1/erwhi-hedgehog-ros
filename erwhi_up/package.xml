@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+The MIT License
+
+Copyright (c) 2019 Giovanni di Dio Bruno https://gbr1.github.io
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<package format="2">
+  <name>erwhi_up</name>
+  <version>1.0.0</version>
+  <description>The erwhi_up package</description>
+
+  <maintainer email="giovannididio.bruno@gmail.com">giovannididio.bruno@gmail.com</maintainer>
+
+  <license>MIT</license>
+
+  <url type="website">https://gbr1.github.io</url>
+
+  <author email="giovannididio.bruno@gmail.com">Giovanni di Dio Bruno</author> 
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+  <build_depend>sengi_ros</build_depend>
+  <build_export_depend>sengi_ros</build_export_depend>
+  <exec_depend>sengi_ros</exec_depend>
+  <build_depend>erwhi_description</build_depend>
+  <build_export_depend>erwhi_description</build_export_depend>
+  <exec_depend>erwhi_description</exec_depend>
+  <build_depend>realsense2_camera</build_depend>
+  <build_depend>erwhi_control</build_depend>
+  <build_depend>upboard_ros</build_depend>
+  <build_depend>joint_state_publisher</build_depend>
+  <build_export_depend>realsense2_camera</build_export_depend>
+  <build_export_depend>erwhi_control</build_export_depend>
+  <build_export_depend>upboard_ros</build_export_depend>
+  <build_export_depend>joint_state_publisher</build_export_depend>
+  <exec_depend>realsense2_camera</exec_depend>
+  <exec_depend>erwhi_control</exec_depend>
+  <exec_depend>upboard_ros</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <build_depend>rtabmap</build_depend>
+
+  <build_export_depend>rtabmap</build_export_depend>
+
+  <exec_depend>rtabmap</exec_depend>
+
+  <build_depend>rtabmap_ros</build_depend>
+  <build_export_depend>rtabmap_ros</build_export_depend>
+  <exec_depend>rtabmap_ros</exec_depend>
+</package>
