@@ -24,7 +24,6 @@ To run autonomous navigation: <br>
 `roslaunch erwhi_navigation explore.launch` <br>
 
 ## Dependencies
-* [upboard_ros](https://github.com/gbr1/upboard_ros)
 * [sengi_ros](https://github.com/gbr1/sengi_ros)
 * [bosch_imu_driver](https://github.com/gbr1/bosch_imu_driver)
 * [realsense2_camera](https://github.com/intel-ros/realsense)
