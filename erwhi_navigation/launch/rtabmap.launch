@@ -79,7 +79,7 @@ THE SOFTWARE.
             <param name="RGBD/LinearUpdate"         type="string" value="0.01"/>
             <param name="RGBD/OptimizeFromGraphEnd" type="string" value="false"/>
 
-            <param name="Rtabmap/StartNewMapOnLoopClosure" value="true"/>
+            <param name="Rtabmap/StartNewMapOnLoopClosure" value="true"/> 
 
             <param name="Reg/Force3DoF"    value="true" />
 
@@ -91,6 +91,10 @@ THE SOFTWARE.
             <param name="cloud_noise_filtering_radius" value="0.05" />
             <param name="cloud_noise_filtering_min_neighbors" value="2" />
             -->
+
+            <param name="Optimizer/Strategy" type="string" value="1" />
+            <param name="Optimizer/Robust" type="string" value="true" />
+            <param name="RGBD/OptimizeMaxError" type="string" value="0" />
         </node>
     </group>
 </launch>
