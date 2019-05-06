@@ -37,18 +37,18 @@ THE SOFTWARE.
         <rosparam file="$(find erwhi_navigation)/config/move_base_params.yaml" command="load" />
 
         <!-- DWA planner -->
-        <!-- -->
+        <!--
         <rosparam file="$(find erwhi_navigation)/config/dwa_local_planner_params.yaml" command="load" />
         <rosparam file="$(find erwhi_navigation)/config/global_planner_params.yaml" command="load" />
         <rosparam file="$(find erwhi_navigation)/config/navfn_global_planner_params.yaml" command="load" />
         <param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame_id)"/>
-        <!-- -->
+        -->
 
         <!-- TEB planner -->
-        <!--
+        
         <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
         <rosparam file="$(find erwhi_navigation)/config/teb_planner.yaml" />
-        -->
+        
         
         <!-- reset frame_id parameters using user input data -->
         <param name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
