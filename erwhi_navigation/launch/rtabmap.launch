@@ -91,10 +91,11 @@ THE SOFTWARE.
             <param name="cloud_noise_filtering_radius" value="0.05" />
             <param name="cloud_noise_filtering_min_neighbors" value="2" />
             -->
-
+            <!-- robust 
             <param name="Optimizer/Strategy" type="string" value="1" />
             <param name="Optimizer/Robust" type="string" value="true" />
             <param name="RGBD/OptimizeMaxError" type="string" value="0" />
+            -->
         </node>
     </group>
 </launch>
