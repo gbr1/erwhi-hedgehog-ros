@@ -29,7 +29,7 @@ To run autonomous navigation: <br>
 * [realsense2_camera](https://github.com/intel-ros/realsense)
 
 ## Known issues
-* teb_local_planner configurations are not finals, at the moment Erwhi works on DWA.
+* _explore_ won't work with DWA, so Erwhi planners are based on TEB 
 * frontier_exploration configurations need to be fixed.
 
 
