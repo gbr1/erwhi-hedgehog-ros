@@ -23,15 +23,36 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 <launch>
-    <!-- start realsense node -->
-    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
-        <arg name="align_depth" value="true"/>
-        <!--<arg name="enable_pointcloud" value="true"/>-->
+    <!-- t265 option -->
+    <include file="$(find realsense2_camera)/launch/rs_t265.launch">
+        <arg name="camera"          value="camera_t265" />
+        <arg name="tf_prefix"       value="camera_link" /> <!-- need to be changed and added new frame in urdf or just publish static transform-->
+        <arg name="enable_fisheye1" value="false" />
+        <arg name="enable_fisheye2" value="false" />
+        <arg name="publish_odom_tf" value="false" />
     </include>
+
+    <include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
+        <arg name="time" value="40" />
+        <arg name="pkg" value="realsense2_camera" />
+        <arg name="file" value="rs_camera.launch" />
+        <arg name="value" value="align_depth:=true" />
+        <arg name="node_name" value="d435_node" />
+  </include> 
+    
+    <!-- start realsense node -->
+    <!-->
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+        <arg name="align_depth" value="true"/>-->
+        <!--<arg name="enable_pointcloud" value="true"/>-->
+   <!--> </include>-->
 
     <!-- start imu -->
     <arg name="bosch_config_file" default="$(find erwhi_bringup)/config/imu_bosch.yaml"/> 
     <node pkg="bosch_imu_driver" type="bosch_imu_node.py" name="bosch_imu_node" output="screen">
         <rosparam file="$(arg bosch_config_file)" command="load"/>
     </node>
+
+    
+
 </launch>
