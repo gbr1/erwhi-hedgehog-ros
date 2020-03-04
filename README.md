@@ -23,6 +23,10 @@ To simulate in Gazebo: <br>
 To run autonomous navigation: <br>
 `roslaunch erwhi_navigation explore.launch` <br>
 
+## Demo
+Video of robot working: [link to youtube](https://www.youtube.com/watch?v=5Fm99uoWtUY)<br>
+Video of "How to Simulate Erwhi in Gazebo": [link to youtube](https://www.youtube.com/watch?v=R5mXczDg0mo)<br>
+
 ## Dependencies
 * [sengi_ros](https://github.com/gbr1/sengi_ros)
 * [bosch_imu_driver](https://github.com/gbr1/bosch_imu_driver)
